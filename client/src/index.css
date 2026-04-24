@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+  font-family: "Poppins", sans-serif;
+}
+
+
+/* antd override */
+input {
+  border-radius: 1px;
+  border: 1px solid rgb(255, 139, 199) !important;
+  height: 40px !important;
+}
+
+input:focus, .ant-picker {
+  outline: none;
+  box-shadow: none;
+  border: 1px solid gray !important;
+}
+
+label {
+  font-size: 16px !important;
+  color: black;
+}
+
+.ant-form-item {
+  margin: 10px 0 !important;
+}
+.ant-picker-input input{
+  border: none !important;
+}
+.ant-picker{
+  height: 40px !important;
+  border-radius: 1px;
+  border: 1px solid rgba(128, 128, 128, 0.521) !important;
+  height: 40px !important;
+}
+
+.spinner-parent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.705);
+  position: fixed;
+  top:0;
+  left: 0;
+  z-index: 9999;;
+  height: 100%;
+  width: 100%;
+}
+.spinner-border{
+  width: 5rem;
+  height: 5rem;
+  color: whitesmoke;
+}
+
+.page-title{
+  font-size: 25px;
+  color: rgba(0, 0, 0, 0.927);
+  font-weight: bold;
+}
+
+
+.card-title {
+  font-size:22px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.normal-text {
+  font-size: 1rem;
+}
+
+.card {
+  box-shadow: 0 0 2px;
+  border-radius: 0 !important;
+  
+}
+
+.primary-button {
+  background: linear-gradient(to right,#eb8eb8,#B2B8E1) !important;
+  border:none !important;
+  height: 40px !important;
+  width: 100% !important;
+  color: aliceblue;
+  font-size: 15px;
+  width: max-content !important;
+}
+.full-width{
+  width: 100% !important;
+}
+
+p{
+  color: rgba(0, 0, 0, 0.671) !important;
+  margin: 0!important;
+  padding: 0 !important;
+}
+
+.anchor {
+  color: rgb(0, 0, 0);
+  text-decoration:none;
+  cursor: pointer;
+  font-size: 15px;
+}
+.anchor:hover{
+  text-decoration: none !important;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+
+
+/* authentication pages */
+.authentication {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color:antiquewhite;
+}
+
+.authentication-form {
+  width: 400px;
+  border-radius: 20px !important;
+}
+
+.authentication .card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: red;
+  color: aliceblue;
+  max-width: max-content;
+  padding: 7px 15px 10px;
+  margin-left: -35px;
+  border-bottom-left-radius: 10px;
+}
