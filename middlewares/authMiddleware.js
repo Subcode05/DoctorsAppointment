@@ -8,17 +8,22 @@ module.exports = async (req, res, next) => {
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
 
             if (err) {
-                return res.status(401).send({ 
+                console.log("JWT Verify Error:", err);
+                return res.status(401).send({
                     message: "Auth failed", success: false,
                 });
 
             } else {
+                if (!req.body) {
+                    req.body = {};
+                }
                 req.body.userId = decoded.id;
                 next();
             }
 
         })
     } catch (error) {
+        console.log("Auth Middleware Catch Error:", error);
         return res.status(401).send({
             message: "Auth failed",
             success: false

@@ -24,7 +24,7 @@ router.post('/register', async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).send({ message: "Error creating user", success: true });
+        res.status(500).send({ message: "Error creating user", success: false });
 
     }
 
@@ -74,22 +74,23 @@ router.post('/apply-doctor-account', authMiddleware, async (req, res) => {
         const newdoctor = new Doctor({ ...req.body, status: "pending" });
         await newdoctor.save();
         const adminUser = await User.findOne({ isAdmin: true });
-
-        const unseenNotifications = adminUser.unseenNotifications;
-        unseenNotifications.push({
-            type: "new-doctor-request",
-            message: `${newdoctor.firstName} ${newdoctor.lastName} has applied for a doctor account`,
-            data: {
-                doctorId: newdoctor._id,
-                name: newdoctor.firstName + " " + newdoctor.lastName
-            },
-            onClickPath: "/admin/doctorslist"
-        });
-        await User.findByIdAndUpdate(adminUser._id, { unseenNotifications });
+        if (adminUser) {
+            const unseenNotifications = adminUser.unseenNotifications;
+            unseenNotifications.push({
+                type: "new-doctor-request",
+                message: `${newdoctor.firstName} ${newdoctor.lastName} has applied for a doctor account`,
+                data: {
+                    doctorId: newdoctor._id,
+                    name: newdoctor.firstName + " " + newdoctor.lastName
+                },
+                onClickPath: "/admin/doctorslist"
+            });
+            await User.findByIdAndUpdate(adminUser._id, { unseenNotifications });
+        }
         res.status(200).send({ success: true, message: "Doctor account applied successfully" });
     } catch (error) {
         console.log(error);
-        res.status(500).send({ message: "Error applying the doctor account", success: true });
+        res.status(500).send({ message: "Error applying the doctor account", success: false, error });
 
     }
 
@@ -112,7 +113,7 @@ router.post('/mark-all-notifications-as-seen', authMiddleware, async (req, res) 
         });
     } catch (error) {
         console.log(error);
-        res.status(500).send({ message: "Error applying the doctor account", success: true });
+        res.status(500).send({ message: "Error marking all notifications as seen", success: false });
 
     }
 
@@ -132,7 +133,7 @@ router.post('/delete-all-notifications', authMiddleware, async (req, res) => {
         });
     } catch (error) {
         console.log(error);
-        res.status(500).send({ message: "Error", success: true });
+        res.status(500).send({ message: "Error deleting all notifications", success: false });
 
     }
 

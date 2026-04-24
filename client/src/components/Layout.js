@@ -104,7 +104,7 @@ function Layout({ children }) {
 
                         {menuToBeRendered.map((menu) => {
                             const isActive = location.pathname === menu.path
-                            return (<div className={`d-flex menu-item ${isActive && 'active-menu-item'}`}>
+                            return (<div key={menu.path} className={`d-flex menu-item ${isActive && 'active-menu-item'}`}>
                                 <i className={menu.icon}></i>
                                 {!collapsed && <Link to={menu.path}>{menu.name}</Link>}
                             </div>);
