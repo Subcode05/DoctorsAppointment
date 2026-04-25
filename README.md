@@ -45,15 +45,31 @@ MedConnect is a comprehensive, full-stack health technology solution designed to
 
 ---
 
-## ⚙️ Architecture & Workflow
+## 🏗️ Architectural Deep Dive
 
-1.  **Authentication Layer**: Uses JWT stored in local storage to secure routes. `ProtectedRoute` and `PublicRoute` components ensure only authorized users access specific features.
-2.  **State Management**: Redux Toolkit manages global states like user data and loading indicators, ensuring data consistency across the app.
-3.  **API Gateway**: A clean Express-based REST API structure with separated routes for Users, Doctors, and Admins.
-4.  **Database Design**:
-    *   **User Model**: Stores basic credentials and role-based permissions (isDoctor, isAdmin).
-    *   **Doctor Model**: Extends user data with professional details and status.
-    *   **Appointment Model**: Links patients and doctors with time-slots and status tracking.
+MedConnect follows a decoupled **Client-Server Architecture** designed for clear separation of concerns and scalability.
+
+### 1. Frontend Architecture (React & Redux)
+The frontend utilizes **Redux Toolkit** for predictable state management across the application.
+- **State Slices**: 
+  - `alertsSlice`: Manages global UI states like loading indicators.
+  - `userSlice`: Synchronizes the logged-in user's profile across all components.
+- **Route Guards**: Uses Higher-Order Components (`ProtectedRoute` and `PublicRoute`) to manage session-based access control.
+- **Session Persistence**: JWT tokens are stored in `localStorage`, and user sessions are automatically restored on page refresh via the `ProtectedRoute`'s initialization logic.
+
+### 2. Backend Architecture (Node.js & Express)
+The backend implements a **Middleware-Centric Design** to handle cross-cutting concerns.
+- **Auth Middleware**: Intercepts requests to protected routes, verifies the JWT signature, and injects the `userId` into the request body. This keeps the route handlers focused purely on business logic.
+- **Modular Routing**: API endpoints are strictly categorized into domain-specific modules (`/api/users`, `/api/doctor`, `/api/admin`).
+
+### 3. Data Persistence (MongoDB & Mongoose)
+The database layer uses **Mongoose ODM** to enforce schema validation in a NoSQL environment.
+- **Relationship Model**: A clean linking system where `Appointment` records act as a bridge between `User` (Patient) and `Doctor` entities.
+- **Notification System**: Built directly into the User model to support real-time-like status updates for appointment approvals.
+
+### 4. Security Flow
+1. **Encryption**: Passwords are never stored in plain text; they are salted and hashed using `bcryptjs`.
+2. **Stateless Auth**: Every sensitive request is authorized via a JWT passed in the `Authorization: Bearer <token>` header, ensuring the server remains stateless and scalable.
 
 ---
 
